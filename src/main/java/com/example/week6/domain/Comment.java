@@ -30,6 +30,8 @@ public class Comment extends Timestamped {
   @Column(nullable = false)
   private String content;
 
+  private int likes;
+
   public void update(CommentRequestDto commentRequestDto) {
     this.content = commentRequestDto.getContent();
   }
