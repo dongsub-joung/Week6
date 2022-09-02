@@ -1,10 +1,7 @@
 package com.example.week6.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,10 +15,12 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(of = {"id","username"})
 public class Member extends Timestamped {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "member_id")
   private Long id;
 
   @Column(nullable = false)
@@ -30,6 +29,11 @@ public class Member extends Timestamped {
   @Column(nullable = false)
   @JsonIgnore
   private String password;
+
+  @OneToMany(mappedBy = "member")
+  private List<Post> posts = new ArrayList<>();
+  @OneToMany(mappedBy = "member")
+  private List<Comment> comments = new ArrayList<>();
 
 
 
@@ -52,5 +56,10 @@ public class Member extends Timestamped {
 
   public boolean validatePassword(PasswordEncoder passwordEncoder, String password) {
     return passwordEncoder.matches(password, this.password);
+  }
+
+  public Member(String username, String password) {
+    this.username = username;
+    this.password = password;
   }
 }

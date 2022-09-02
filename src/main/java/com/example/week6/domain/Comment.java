@@ -1,10 +1,7 @@
 package com.example.week6.domain;
 
 import com.example.week6.controller.request.CommentRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,10 +10,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(of = {"member","post","content"})
 public class Comment extends Timestamped {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "comment_id")
   private Long id;
 
   @JoinColumn(name = "member_id", nullable = false)
@@ -31,6 +30,13 @@ public class Comment extends Timestamped {
   private String content;
 
   private int likes;
+
+
+  public Comment(Member member, Post post, String content) {
+    this.member = member;
+    this.post = post;
+    this.content = content;
+  }
 
   public void update(CommentRequestDto commentRequestDto) {
     this.content = commentRequestDto.getContent();

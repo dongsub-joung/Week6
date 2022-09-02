@@ -1,10 +1,7 @@
 package com.example.week6.domain;
 
 import com.example.week6.controller.request.PostRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,10 +11,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(of = {"title", "content","member"})
 public class Post extends Timestamped {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "post_id")
   private Long id;
 
   @Column(nullable = false)
@@ -26,7 +25,7 @@ public class Post extends Timestamped {
   @Column(nullable = false)
   private String content;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
   private List<Comment> comments;
 
   @JoinColumn(name = "member_id", nullable = false)
@@ -35,6 +34,12 @@ public class Post extends Timestamped {
 
   private int likes;
   private int imageUrl;
+
+  //== 연관관계 메서드 ==//
+  public void setMember(Member member) {
+    this.member = member;
+    member.getPosts().add(this);
+  }
 
   public void update(PostRequestDto postRequestDto) {
     this.title = postRequestDto.getTitle();
@@ -45,4 +50,10 @@ public class Post extends Timestamped {
     return !this.member.equals(member);
   }
 
+
+  public Post(String title, String content, Member member) {
+    this.title = title;
+    this.content = content;
+    this.member = member;
+  }
 }
