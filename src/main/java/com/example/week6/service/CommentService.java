@@ -57,7 +57,7 @@ public class CommentService {
     return ResponseDto.success(
         CommentResponseDto.builder()
             .id(comment.getId())
-            .author(comment.getMember().getNickname())
+            .author(comment.getMember().getUsername())
             .content(comment.getContent())
             .createdAt(comment.getCreatedAt())
             .modifiedAt(comment.getModifiedAt())
@@ -79,7 +79,7 @@ public class CommentService {
       commentResponseDtoList.add(
           CommentResponseDto.builder()
               .id(comment.getId())
-              .author(comment.getMember().getNickname())
+              .author(comment.getMember().getUsername())
               .content(comment.getContent())
               .createdAt(comment.getCreatedAt())
               .modifiedAt(comment.getModifiedAt())
@@ -124,7 +124,7 @@ public class CommentService {
     return ResponseDto.success(
         CommentResponseDto.builder()
             .id(comment.getId())
-            .author(comment.getMember().getNickname())
+            .author(comment.getMember().getUsername())
             .content(comment.getContent())
             .createdAt(comment.getCreatedAt())
             .modifiedAt(comment.getModifiedAt())

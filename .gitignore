@@ -1,2 +1,4 @@
-
-application.properties
+/src/main/resources/application-credentials.yml
+/src/main/resources/application.propertiesapplication.yml
+/src/main/resources/application.yml
+/src/main/resources/application-aws.yml
