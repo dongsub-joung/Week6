@@ -120,6 +120,7 @@ public class PostService {
                       .createdTime(post.getCreatedAt())
                       .username(post.getMember().getUsername())
                       .watch(post.getNumberOfWatch())
+                      .likes(post.getLikes().size())
                       .build()
       );
 

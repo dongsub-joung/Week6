@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -32,7 +33,9 @@ public class Post extends Timestamped {
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
 
-  private int likes;
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+  List<PostLike> likes = new ArrayList<>();
+
   private String imageUrl;
   @Column(nullable = false)
   private int numberOfWatch;    // 상세 게시글 조회수
@@ -60,7 +63,11 @@ public class Post extends Timestamped {
     this.member = member;
   }
 
+  /**
+   * 조회수 증가
+   */
   public void addCount() {
     this.numberOfWatch += 1;
   }
+
 }

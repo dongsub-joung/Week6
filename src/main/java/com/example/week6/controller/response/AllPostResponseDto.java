@@ -22,6 +22,7 @@ public class AllPostResponseDto {
     private LocalDateTime createdTime;
     private String username;
     private int watch;
+    private int likes;
 
 
 }
