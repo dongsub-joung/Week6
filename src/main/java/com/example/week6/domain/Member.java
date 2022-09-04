@@ -15,7 +15,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(of = {"id","username"})
 public class Member extends Timestamped {
 
   @Id
@@ -30,8 +29,11 @@ public class Member extends Timestamped {
   @JsonIgnore
   private String password;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "member")
   private List<Post> posts = new ArrayList<>();
+
+  @JsonIgnore
   @OneToMany(mappedBy = "member")
   private List<Comment> comments = new ArrayList<>();
 

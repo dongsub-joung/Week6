@@ -2,6 +2,7 @@ package com.example.week6.domain;
 
 import com.example.week6.controller.request.PostRequestDto;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(of = {"title", "content","member"})
 public class Post extends Timestamped {
 
   @Id
@@ -33,9 +33,12 @@ public class Post extends Timestamped {
   private Member member;
 
   private int likes;
-  private int imageUrl;
+  private String imageUrl;
+  @Column(nullable = false)
+  private int numberOfWatch;    // 상세 게시글 조회수
 
-  //== 연관관계 메서드 ==//
+
+//  == 연관관계 메서드 ==//
   public void setMember(Member member) {
     this.member = member;
     member.getPosts().add(this);
@@ -55,5 +58,9 @@ public class Post extends Timestamped {
     this.title = title;
     this.content = content;
     this.member = member;
+  }
+
+  public void addCount() {
+    this.numberOfWatch += 1;
   }
 }
