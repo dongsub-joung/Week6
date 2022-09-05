@@ -15,10 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MyPageResponseDto {
 
-    private List<PostResponseDto> postList;
+    private List<AllPostResponseDto> postList;
     private List<CommentResponseDto> commentList;
-    private String title;
-    private String content;
-    private String author;
-    private LocalDateTime modifiedAt;
+    private List<AllPostResponseDto> postLikeList;
+    private List<CommentResponseDto> commentLikeList;
 }

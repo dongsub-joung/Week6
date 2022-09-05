@@ -16,5 +16,5 @@ public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
     @Transactional
     void removeByMemberId(Long id);
 
-    List<Post> findByMemberId(Long id);
+    List<PostLike> findByMemberId(Long id);
 }

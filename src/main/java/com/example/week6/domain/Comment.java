@@ -4,6 +4,8 @@ import com.example.week6.controller.request.CommentRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -29,12 +31,18 @@ public class Comment extends Timestamped {
   @Column(nullable = false)
   private String content;
 
-  private int likes;
+  @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+  List<CommentLike> likes = new ArrayList<>();
 
-
-  public Comment(Member member, Post post, String content) {
+  //== 연관관계 메서드 ==//
+  public void setMember(Member member) {
     this.member = member;
-    this.post = post;
+    member.getComments().add(this);
+  }
+
+
+  public Comment(Member member, String content) {
+    this.member = member;
     this.content = content;
   }
 

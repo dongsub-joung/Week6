@@ -25,6 +25,23 @@ public class CommentLikeService {
         Comment comment = isPresentComment(id);
         Member member = validateMember(request);
 
+        // 토큰 검증
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail("MEMBER_NOT_FOUND",
+                    "로그인이 필요합니다.");
+        }
+
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail("MEMBER_NOT_FOUND",
+                    "로그인이 필요합니다.");
+        }
+
+        // 회원 검증
+
+        if (null == member) {
+            return ResponseDto.fail("INVALID_TOKEN", "Token이 유효하지 않습니다.");
+        }
+
         // 댓글 검증
         if (null == comment) {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 댓글 id입니다.");
