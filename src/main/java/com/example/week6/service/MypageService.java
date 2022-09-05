@@ -31,8 +31,23 @@ public class MypageService {
 
     public ResponseDto<?> getAllMyActs(HttpServletRequest request) {
 
+        if (null == request.getHeader("Refresh-Token")) {
+            return ResponseDto.fail("MEMBER_NOT_FOUND",
+                    "로그인이 필요합니다.");
+        }
+
+        if (null == request.getHeader("Authorization")) {
+            return ResponseDto.fail("MEMBER_NOT_FOUND",
+                    "로그인이 필요합니다.");
+        }
+
         // 회원 정보 가져오기
         Member member = validateMember(request);
+
+        if (null == member) {
+            return ResponseDto.fail("INVALID_TOKEN", "Token이 유효하지 않습니다.");
+        }
+
 
         // 회원이 작성한 게시글 리스트 가져오기
         List<Post> postList = postRepository.findAllByMemberId(member.getId());
